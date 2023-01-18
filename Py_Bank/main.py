@@ -1,75 +1,52 @@
 #Read csv file
 import os
 import csv
-csvpath = os.path.join('..', 'Resources', 'budget_data.csv')
+csvpath = os.path.join('Resources', 'budget_data.csv')
+month_counts = 0
+total = 0
+date=[]
+difference = []
+increase =['', 0]
+decrease=['', 100000000000]
 with open(csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
-    print(csvreader)
-#read headers
-    csv_header = next(csvheader)
-    print(f'CSV Header: {csv_header}')
-for row in csvreader:
-         print(row)
+    csv_header = next(csvreader)
+    first_row = next(csvreader)
+    #print(first_row)
+    month_counts+=1
+    total+=int(first_row[1])
+    previous = int(first_row[1])
 
-#printing headers
-    print(f'CSV Header: {csv_header}')
-    print('Header:{csv_header}')
-    print('Financial Analysis')
-    print('Total Months: ')
-    print('Total: ')
-    print('Average Change: ')
-    print('Greatest Increase in Profits: ')
-    print('Greatest Decrease in Profits: ' )
+    for row in csvreader: 
+        month_counts+=1
+        total+=int(row[1])
 
-#defining variables
-Total_months = month_counts
-month_counts = 0
-Total = (Average(Total))
-Total = 0
-Average_Change = 0
-date=[]
-profit = []
-previous_profit = 0
-difference = []
-total_difference = 0
-loss = 0
-increase =('month': '','profit':0)
-decrease=('month': '','profit/loss':0)
+        change = int(row[1])- previous
+        previous = int(row[1]) 
 
-#The total number of months included in the dataset
-for row in csvreader:
-    print(row)
-    Total_months = month_counts
-    month_counts = 0
-    Total_months = int(month_counts+1)
-
-#The net total amount of "Profit/Losses" over the entire period
-for row in csvreader:
+        difference.append(change)
         date.append(row[0])
-        profit = int(row[1])
-        profit/loss.append(profit)
 
-#The changes in "Profit/Losses" over the entire period, and then the average of those changes
-difference=0
-for changes in profit:
-    if previous_profit = 0 then
-    difference = profit-previous_profit
-    difference.append()
-previous_profit = profit
-    #average of the changes
-def average(changes in profit)
-    difference = profit-previous_profit
-    total_difference = 0
-    average(total_difference - difference/Total_months)
-   
-#The greatest increase in profits (date and amount) over the entire period
-if difference > increase['profit']
-    increase['profit'] = difference
-    increase ['month'] = row.append(row[0])
-#The greatest decrease in profits (date and amount) over the entire period
-if difference < decrease['loss']
-    decrease['loss'] = difference
-    decrease ['month'] = row.append(row[0])
-#Average of changes
- Average_Change = sum(total_difference) / int(Total_months)
+        if change > increase[1]:
+            increase[1]=change
+            increase[0] = row[0]
 
+        if change < decrease[1]:
+            decrease[1]=change
+            decrease[0] = row[0]
+
+average_change = sum(difference)/ len(difference)
+
+result=(f"""
+Financial Analysis
+----------------------------
+Total Months: {month_counts}
+Total: ${total:,.2f}
+Average Change: ${average_change:,.2f}
+Greatest Increase in Profits: {increase[0]} (${increase[1]:,.2f})
+Greatest Decrease in Profits: {decrease[0]} (${decrease[1]:,.2f})
+""")
+print(result)
+output_path = os.path.join("Analysis","budget_analysis.txt")
+with open(output_path,"w") as file:
+    file.write(result)
