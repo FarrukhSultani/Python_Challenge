@@ -12,7 +12,6 @@ with open(csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
     csv_header = next(csvreader)
     first_row = next(csvreader)
-    #print(first_row)
     month_counts+=1
     total+=int(first_row[1])
     previous = int(first_row[1])
