@@ -1,11 +1,11 @@
 #Read the CSV file
 import os
 import csv
-csvpath = os.path.join('Resources', 'election_data.csv')
-output = open('Pypoll/Analysis/file.txt','w')
-
+csvpath = os.path.join("Resources", "election_data.csv")
+output = open('Analysis/Election_result.txt')
+print(csvpath)
 #Define variables
-votecounts = {}
+votecounts = 0
 county = []
 candidates_name = []
 wincounts = {}
@@ -22,20 +22,20 @@ with open(csvpath) as csvfile:
     output.write(f"Header:{csv_header}\n")
     first_row = next(csvreader)
     votecounts+=1
-    totalvotecounts+=int(first_row[1])
+    totalvotecounts+=int(first_row[0])
     previous = int(first_row[1])
 
  
  # A complete list of candidates who received votes
-    candidates_name = [Charles Casper Stockham, Diana DeGette, Raymon Anthony Doane]
+    candidates_name = ['Charles Casper Stockham', 'Diana DeGette', 'Raymon Anthony Doane']
     print(candidates_name)
 
 # The total number of votes each candidate won
-for row in csvreader
- if row[2] not in candidates_name:
-    candidates_name.append(row[2])
-    wincounts[row[2]]=0
-    wincounts[row[2]]+=1
+    for row in csvreader:
+        if row[2] not in candidates_name:
+            candidates_name.append(row[2])
+            wincounts[row[2]]=0
+            wincounts[row[2]]+=1
 
 #Print
 print(f"Election Results")
